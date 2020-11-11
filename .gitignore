@@ -1,3 +1,11 @@
+## Linux, Windows, vi, gedit, geany, etc.
+.*
+!.gitignote
+*~
+*.swp
+Thumbs.db
+poetry.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
