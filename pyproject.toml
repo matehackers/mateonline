@@ -6,8 +6,7 @@ authors = ["Iuri Guilherme <2027447+iuriguilherme@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-fastapi = "^0.61.2"
-uvicorn = "^0.12.2"
+fastapi = {extras = ["all"], version = "^0.61.2"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
