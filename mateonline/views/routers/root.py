@@ -22,28 +22,20 @@
 #  
 #  
 
-from datetime import datetime
-from typing import List, Optional
+import logging
+logger = logging.getLogger('routers.root')
 
-from pydantic import BaseModel
+from fastapi import (
+    APIRouter,
+    Form,
+)
 
-class User(BaseModel):
-    id: int
-    name = "John Doe"
-    signup_ts: Optional[datetime] = None
-    friends: List[int] = []
+router = APIRouter()
 
-external_data = {
-    "id": "123",
-    "signup_ts": "2017-06-01 12:22",
-    "friends": [1, "2", b"3"],
-}
+@router.get("/")
+async def read_root():
+    return {"Hello": "World"}
 
-user = User(**external_data)
-
-print(user)
-# > User id=123 name='John Doe' signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]
-
-print(user.id)
-# > 123
-
+@router.post("/login/")
+async def login(username: str = Form(...), password: str = Form(...)):
+    return {"username": username}

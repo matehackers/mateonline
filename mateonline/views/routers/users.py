@@ -22,28 +22,39 @@
 #  
 #  
 
-from datetime import datetime
-from typing import List, Optional
+import logging
 
-from pydantic import BaseModel
+from fastapi import APIRouter
 
-class User(BaseModel):
-    id: int
-    name = "John Doe"
-    signup_ts: Optional[datetime] = None
-    friends: List[int] = []
+logger = logging.getLogger('routers.users')
 
-external_data = {
-    "id": "123",
-    "signup_ts": "2017-06-01 12:22",
-    "friends": [1, "2", b"3"],
-}
+from typing import Optional
 
-user = User(**external_data)
+from mateonline.models.user import User
+from mateonline.models.item import Item
 
-print(user)
-# > User id=123 name='John Doe' signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]
+router = APIRouter()
 
-print(user.id)
-# > 123
+@router.get("/me")
+async def read_user_me():
+    return {"user_id": "the current user"}
+
+@router.get("/{user_id}")
+async def read_user(user_id: str):
+    return {"user_id": user_id}
+
+@router.get("/{user_id}/items/{item_id}")
+async def read_user_item(
+    user_id: int,
+    item_id: str,
+    q: Optional[str] = None,
+    short: bool = False,
+):
+    item = {"item_id": item_id, "owner_id": user_id}
+    if q:
+        item.update({"q": q})
+    if not short:
+        item.update({"description": """This is an amazing item that has a long \
+description"""})
+    return item
 

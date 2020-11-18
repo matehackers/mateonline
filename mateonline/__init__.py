@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
 #  MateOnLine
@@ -26,23 +25,21 @@
 __version__ = '0.1.0'
 
 import logging
+
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger('mateonline')
+logger = logging.getLogger(name)
+
+name = 'mateonline'
+version = __version__
 
 try:
-    from .controllers.api import api
-    from .models.user import user
+    logger.info(u"Iniciando MateOnLine...")
+    from mateonline.controllers.fastapi_app import app as api
+
+    logger.info(u"Iniciando MateOnLine Web...")
+    from mateonline.controllers.quart_app import app as web
+    api.mount("/", web)
 except Exception as e:
     logger.critical(repr(e))
-    raise
-
-def main():
-    logging.info(u"Iniciando MateOnLine...")
-    logger.info(u"Iniciando MateOnLine...")
-    pass
     logger.info(u"Encerrando MateOnLine...")
-    return 0
-
-if __name__ == '__main__':
-    main()
-
+    raise

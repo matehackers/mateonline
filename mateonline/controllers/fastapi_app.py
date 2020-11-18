@@ -22,28 +22,25 @@
 #  
 #  
 
-from datetime import datetime
-from typing import List, Optional
+from fastapi import FastAPI
 
-from pydantic import BaseModel
+from mateonline.views.routers import (
+    root,
+    users,
+    items,
+)
 
-class User(BaseModel):
-    id: int
-    name = "John Doe"
-    signup_ts: Optional[datetime] = None
-    friends: List[int] = []
+app = FastAPI()
 
-external_data = {
-    "id": "123",
-    "signup_ts": "2017-06-01 12:22",
-    "friends": [1, "2", b"3"],
-}
-
-user = User(**external_data)
-
-print(user)
-# > User id=123 name='John Doe' signup_ts=datetime.datetime(2017, 6, 1, 12, 22) friends=[1, 2, 3]
-
-print(user.id)
-# > 123
-
+app.include_router(
+    root.router,
+    prefix="/api",
+)
+app.include_router(
+    users.router,
+    prefix="/api/users",
+)
+app.include_router(
+    items.router,
+    prefix="/api/items",
+)

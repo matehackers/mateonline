@@ -4,7 +4,11 @@
 *~
 *.swp
 Thumbs.db
+
+## Eu desenvolvo em vários ambientes e sistemas operacionais 
+## diferentese reproducibilidade é uma mentira
 poetry.lock
+Pipfile.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
