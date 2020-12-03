@@ -26,11 +26,11 @@ __version__ = '0.1.0'
 
 import logging
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(name)
-
 name = 'mateonline'
 version = __version__
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(name)
 
 try:
     logger.info(u"Iniciando MateOnLine...")
